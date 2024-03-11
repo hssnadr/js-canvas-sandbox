@@ -40,7 +40,7 @@ ctx.resetTransform() // reset transform
 
 // 3 - Save & Restore
 ctx.save()
-ctx.translate(300, 0)
+ctx.translate(300, size / 2) // offset = size/2 sur l'axe Y pour ne pas couper le carré
 drawRectangle(green)
 ctx.restore()
 
