@@ -7,83 +7,67 @@ const ctx = canvas.getContext('2d') // context type: https://developer.mozilla.o
  *  CONFIG
  */
 const params = {
-    rows: 4,
-    cols: 4,
-    scale: .5,
-    angle: 45,
-    chance: .7
+    nBubbles: 4,
 }
-
-const red = '#E83A4E'
-const yellow = '#FFE800'
-const blue = '#3B76F5'
-const green = '#71E394'
-const colors = [red, yellow, blue, green]
+const debug = new GUI() // create a debug GUI and add it to the DOM
 
 /**
- *  METHODS
+ *  CLASSES
  */
-const drawRectangle = (cWidth, cHeight, color) => {
-    ctx.fillStyle = color
-    ctx.beginPath()
-    ctx.rect(-cWidth / 2, -cHeight / 2, cWidth, cHeight)
-    ctx.fill()
-    ctx.closePath()
+class Bubble {
+    constructor(x, y) {
+        this.x = x
+        this.y = y
+        this.vx = Math.random() * 2 - 1 // [-1 : 1]
+        this.vy = Math.random() * 2 - 1 // [-1 : 1]
+        this.lineWidth = 2
+        this.radius = 10
+    }
+
+    draw(context) {
+        // style
+        context.lineWidth = this.lineWidth
+        context.fillStyle = 'white'
+        context.strokeStyle = 'black'
+        
+        // draw
+        context.save()
+        context.translate(this.x, this.y)
+        context.beginPath()
+        context.arc(0, 0, this.radius, 0, 2 * Math.PI)
+        context.fill()
+        context.stroke()
+        context.closePath()
+        context.restore()
+    }
 }
 
-const deg2rad = (deg) => {
-    return deg * 2 * Math.PI / 360
-}
 
 /**
  *  MAIN
  */
-const generateMosaic = () => {
-    ctx.clearRect(0,0,canvas.width, canvas.height)
-
+const generateBubbles = () => {
     // Get canvas dimensions
-    console.log(canvas.getBoundingClientRect())
     const canvasWidth = canvas.getBoundingClientRect().width
     const canvasHeight = canvas.getBoundingClientRect().height
     canvas.width = canvasWidth
     canvas.height = canvasHeight
 
-    // Compute cells dimensions
-    const cellWidth = canvasWidth / params.cols
-    const cellHeight = canvasHeight / params.rows
-
-    for (let i = 0; i < params.cols; i++) {
-        for (let j = 0; j < params.rows; j++) {
-            const x_ = i * cellWidth + cellWidth / 2
-            const y_ = j * cellHeight + cellHeight / 2
-            const colors_ = colors[(i + j) % colors.length]
-
-            ctx.save()
-            ctx.translate(x_, y_)
-            if (Math.random() < params.chance) {
-                ctx.rotate(deg2rad(params.angle))
-
-                const scaleW_ = cellWidth > cellHeight ? params.scale * cellHeight / cellWidth : params.scale
-                const scaleH_ = cellHeight > cellWidth ? params.scale * cellWidth / cellHeight : params.scale
-                ctx.scale(scaleW_, scaleH_)
-            }
-            drawRectangle(cellWidth, cellHeight, colors_)
-
-            ctx.restore()
-        }
+    const bubbles = []
+    for(let i = 0; i<params.nBubbles; i++) {
+        const x_ = canvasWidth * Math.random()
+        const y_ = canvasHeight * Math.random()
+        const bubble_ = new Bubble(x_, y_)
+        bubbles.push(bubble_)
     }
+
+    bubbles.forEach((b) => {
+        b.draw(ctx)
+    })
 }
 
 // Debug
-const debug = new GUI() // create a debug GUI and add it to the DOM
-let folder = debug.addFolder("GRID")
-folder.add(params, 'cols', 1, 10, 1).onFinishChange(generateMosaic) // onFinishChange plutôt que onChange pour éviter les glitchs et alléger les besoins de performances
-folder.add(params, 'rows', 1, 10, 1).onFinishChange(generateMosaic)
-
-folder = debug.addFolder("GENERATIVE")
-folder.add(params, 'scale', .01, .5, .1).onFinishChange(generateMosaic)
-folder.add(params, 'angle', 0, 360, 1).onFinishChange(generateMosaic)
-folder.add(params, 'chance', .01, 1, .1).onFinishChange(generateMosaic)
+debug.add(params, 'nBubbles', 2, 100, 1).onChange(generateBubbles)
 
 // Start
-generateMosaic()
+generateBubbles()

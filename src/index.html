@@ -9,15 +9,22 @@
 </head>
 
 <body>
-    <h1>Generative loops</h1>
-    <canvas class="mosaic"></canvas>
+    <h1>Bouncing bubbles</h1>
+    <div class="container">
+        <canvas id="canvas-bubbles" class="bubbles"></canvas>
+    </div>
     <script type="module" src="./main.js"></script>
 </body>
 <style>
-    .mosaic {
-        width: 100vw;
-        height: 100vw;
-        background-color: black;
+    .container {
+        display: flex;
+        justify-content: center;
+    }
+
+    .bubbles {
+        width: 50vw;
+        height: 50vw;
+        border: solid;
     }
 </style>
 
