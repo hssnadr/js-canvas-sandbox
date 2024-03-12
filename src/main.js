@@ -8,20 +8,32 @@ const ctx = canvas.getContext('2d') // context type: https://developer.mozilla.o
  */
 const params = {
     nBubbles: 4,
+    speed: 1
 }
 const debug = new GUI() // create a debug GUI and add it to the DOM
+let guiFolder
+
+/**
+ * METHODS
+ */
+const clearCanvas = () => {
+    ctx.clearRect(0, 0, canvas.width, canvas.height)
+}
 
 /**
  *  CLASSES
  */
 class Bubble {
-    constructor(x, y) {
+    constructor(x, y, context) {
         this.x = x
         this.y = y
-        this.vx = Math.random() * 2 - 1 // [-1 : 1]
-        this.vy = Math.random() * 2 - 1 // [-1 : 1]
         this.lineWidth = 2
         this.radius = 10
+
+        // animation
+        this.vx = Math.random() * 2 - 1 // [-1 : 1]
+        this.vy = Math.random() * 2 - 1 // [-1 : 1]
+        this.context = context
     }
 
     draw(context) {
@@ -29,7 +41,7 @@ class Bubble {
         context.lineWidth = this.lineWidth
         context.fillStyle = 'white'
         context.strokeStyle = 'black'
-        
+
         // draw
         context.save()
         context.translate(this.x, this.y)
@@ -39,6 +51,16 @@ class Bubble {
         context.stroke()
         context.closePath()
         context.restore()
+    }
+
+    update(canvas, speed = 1) {
+        // position
+        this.x += this.vx * speed
+        this.y += this.vy * speed
+
+        // bounce
+        if (this.x < 0 || this.x > canvas.width) this.vx *= -1
+        if (this.y < 0 || this.y > canvas.height) this.vy *= -1
     }
 }
 
@@ -53,21 +75,32 @@ const generateBubbles = () => {
     canvas.width = canvasWidth
     canvas.height = canvasHeight
 
+    // Setup
     const bubbles = []
-    for(let i = 0; i<params.nBubbles; i++) {
+    for (let i = 0; i < params.nBubbles; i++) {
         const x_ = canvasWidth * Math.random()
         const y_ = canvasHeight * Math.random()
-        const bubble_ = new Bubble(x_, y_)
+        const bubble_ = new Bubble(x_, y_, ctx)
         bubbles.push(bubble_)
     }
 
-    bubbles.forEach((b) => {
-        b.draw(ctx)
-    })
+    // Update
+    const update = () => {
+        clearCanvas()
+        bubbles.forEach((b) => {
+            b.update(canvas, params.speed)
+            b.draw(ctx)
+        })
+        window.requestAnimationFrame(update)
+    }
+    update()
 }
 
 // Debug
-debug.add(params, 'nBubbles', 2, 100, 1).onChange(generateBubbles)
+guiFolder = debug.addFolder("SETUP")
+guiFolder.add(params, 'nBubbles', 2, 100, 1).onChange(generateBubbles)
+guiFolder = debug.addFolder("UPDATE")
+guiFolder.add(params, 'speed', -10, 10, .1)
 
 // Start
 generateBubbles()
