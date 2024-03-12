@@ -24,13 +24,13 @@ const deg2rad = (deg) => {
 ctx.translate(size / 2, size / 2)
 
 // 1 - Translate
-ctx.translate(100, 100)
+ctx.translate(200, 200)
 drawRectangle(blue)
-ctx.translate(-100, -100) // ! translate ne prend pas de valeurs absolues : il faut retrancher par rapport à la position existante
+ctx.translate(-200, -200) // ! translate ne prend pas de valeurs absolues : il faut retrancher par rapport à la position existante
 drawRectangle(yellow)
 
 // 2 - Rotate
-ctx.translate(200, 200)
+ctx.translate(400, 400)
 ctx.rotate(deg2rad(45)) // !! order
 drawRectangle(red)
 
@@ -40,12 +40,12 @@ ctx.resetTransform() // reset transform
 
 // 3 - Save & Restore
 ctx.save()
-ctx.translate(300, size / 2) // offset = size/2 sur l'axe Y pour ne pas couper le carré
+ctx.translate(600, size / 2) // offset = size/2 sur l'axe Y pour ne pas couper le carré
 drawRectangle(green)
 ctx.restore()
 
 ctx.save()
-ctx.translate(300, 300)
+ctx.translate(600, 600)
 ctx.rotate(deg2rad(45)) // !! order
 drawRectangle(green)
 ctx.restore()
