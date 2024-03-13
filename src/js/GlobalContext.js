@@ -24,7 +24,6 @@ export default class GlobalContext {
     }
 
     update() {
-        console.log(this.time.elapsed)
         this.scenes.forEach(s => {
             s.update()
         })

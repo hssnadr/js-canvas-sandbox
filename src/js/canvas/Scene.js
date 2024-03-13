@@ -9,7 +9,7 @@ export default class Scene {
         
         // debug
         this.params = {
-            isUpdate: false
+            isUpdate: true
         }
         this.debug = this.globalContext.debug
         this.debugFolder = this.debug.ui.addFolder(this.id)
@@ -28,7 +28,8 @@ export default class Scene {
     get postion() { return this.domElement.position }
 
     update() {
-        console.log(this.id)
+        if(!this.params.isUpdate) return
+        console.log(this.id) // test
     }
     destroy() {}
 }
