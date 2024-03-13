@@ -28,8 +28,7 @@ export default class Scene {
     get postion() { return this.domElement.position }
 
     update() {
-        if(!!callback) callback()
+        console.log(this.id)
     }
-
     destroy() {}
 }
