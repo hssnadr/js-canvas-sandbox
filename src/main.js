@@ -130,7 +130,7 @@ guiFolder = debug.addFolder("SETUP")
 guiFolder.add(params, 'nBubbles', 2, 100, 1).onChange(generateBubbles)
 guiFolder = debug.addFolder("UPDATE")
 guiFolder.add(params, 'speed', -10, 10, .1)
-guiFolder.add(params, 'radius', 1, 20, .1)
+guiFolder.add(params, 'radius', 0, 20, .1)
 guiFolder.add(params, 'lineWidth', 1, 10, .1)
 guiFolder.add(params, 'threshold', 0, canvas.width, 1)
 
