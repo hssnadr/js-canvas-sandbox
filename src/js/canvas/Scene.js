@@ -3,14 +3,16 @@ import DomElement from "../utils/DomElement"
 
 export default class Scene {
     constructor(id = "canvas-scene") {
+        this.id = id
         this.globalContext = new GlobalContext()
+        this.globalContext.pushScene(this)
         
         // debug
         this.params = {
             isUpdate: false
         }
         this.debug = this.globalContext.debug
-        this.debugFolder = this.debug.ui.addFolder(id)
+        this.debugFolder = this.debug.ui.addFolder(this.id)
         this.debugFolder.add(this.params, 'isUpdate')
 
         // canvas
@@ -24,4 +26,10 @@ export default class Scene {
     get width() { return this.domElement.width }
     get height() { return this.domElement.height }
     get postion() { return this.domElement.position }
+
+    update() {
+        if(!!callback) callback()
+    }
+
+    destroy() {}
 }
