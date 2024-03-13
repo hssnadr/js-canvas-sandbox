@@ -4,6 +4,7 @@ const scene = new Scene() // set id if != "canvas-scene" (default)
 console.log(scene)
 // const scene2 = new Scene("scene-2") // example
 
+/** test */
 scene.context.fillStyle = 'red'
 scene.context.fillRect(0,0, scene.width / 2, scene.height / 2)
 scene.context.fillStyle = 'blue'
