@@ -6,14 +6,16 @@ export default class Scene {
         this.id = id
         this.globalContext = new GlobalContext()
         this.globalContext.pushScene(this)
-        
+
         // debug
         this.params = {
             isUpdate: true
         }
         this.debug = this.globalContext.debug
-        this.debugFolder = this.debug.ui.addFolder(this.id)
-        this.debugFolder.add(this.params, 'isUpdate')
+        if (this.debug.active) {
+            this.debugFolder = this.debug.ui.addFolder(this.id)
+            this.debugFolder.add(this.params, 'isUpdate')
+        }
 
         // canvas
         this.domElement = new DomElement(id)
@@ -28,8 +30,8 @@ export default class Scene {
     get postion() { return this.domElement.position }
 
     update() {
-        if(!this.params.isUpdate) return
+        if (!this.params.isUpdate) return
         console.log(this.id) // test
     }
-    destroy() {}
+    destroy() { }
 }
