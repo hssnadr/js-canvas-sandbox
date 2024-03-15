@@ -1,16 +1,4 @@
-import Scene from "./js/canvas/Scene"
+import Scenario from "./js/scenarios/Scenario"
 
-const scene = new Scene() // set id if != "canvas-scene" (default)
-const scene2 = new Scene("canvas-scene-2") // example
-
-/** test 1 */
-scene.context.fillStyle = 'red'
-scene.context.fillRect(0,0, scene.width / 2, scene.height / 2)
-scene.context.fillStyle = 'blue'
-scene.context.fillRect(scene.width / 2, scene.height / 2, scene.width / 2, scene.height / 2)
-
-/** test 2 */
-scene2.context.fillStyle = 'yellow'
-scene2.context.fillRect(0,0, scene.width / 2, scene.height / 2)
-scene2.context.fillStyle = 'green'
-scene2.context.fillRect(scene.width / 2, scene.height / 2, scene.width / 2, scene.height / 2)
+const scene = new Scenario()
+const scene2 = new Scenario('canvas-scene-2')

@@ -1,4 +1,5 @@
 import Debug from "./utils/Debug"
+import Size from "./utils/Size"
 import Time from "./utils/Time"
 
 let instance = null
@@ -15,6 +16,10 @@ export default class GlobalContext {
         this.time = new Time()
         this.time.on('update', () => { this.update() })
 
+        // Size
+        this.windowSize = new Size()
+        this.windowSize.on('resize', () => { this.resize() })
+
         // Scenes
         this.scenes = []
     }
@@ -26,6 +31,12 @@ export default class GlobalContext {
     update() {
         this.scenes.forEach(s => {
             s.update()
+        })
+    }
+
+    resize() {
+        this.scenes.forEach(s => {
+            s.resize()
         })
     }
 

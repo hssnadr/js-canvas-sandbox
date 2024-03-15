@@ -2,10 +2,10 @@ export default class DomElement {
     constructor(id) {
         this.id = id
         this.instance = document.getElementById(id)
-        this.getBoundingRect()
+        this.setSize()
     }
 
-    getBoundingRect() {
+    setSize() {
         const rect_ = this.instance.getBoundingClientRect()
         this.width = rect_.width
         this.height = rect_.height
