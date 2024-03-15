@@ -4,14 +4,16 @@ import DomElement from "../utils/DomElement"
 export default class Scene {
     constructor(id = "canvas-scene") {
         this.globalContext = new GlobalContext()
-        
+
         // debug
         this.params = {
             isUpdate: false
         }
         this.debug = this.globalContext.debug
-        this.debugFolder = this.debug.ui.addFolder(id)
-        this.debugFolder.add(this.params, 'isUpdate')
+        if (this.debug.active) {
+            this.debugFolder = this.debug.ui.addFolder(id)
+            this.debugFolder.add(this.params, 'isUpdate')
+        }
 
         // canvas
         this.domElement = new DomElement(id)
