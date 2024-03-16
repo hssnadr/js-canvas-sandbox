@@ -1,7 +1,7 @@
 console.log("Hello Javascript")
 
-let canvas = document.querySelector('canvas')
-let ctx = canvas.getContext('2d') // context type: https://developer.mozilla.org/fr/docs/Web/API/HTMLCanvasElement/getContext#typedecontexte
+const canvas = document.querySelector('canvas')
+const ctx = canvas.getContext('2d') // context type: https://developer.mozilla.org/fr/docs/Web/API/HTMLCanvasElement/getContext#typedecontexte
 
 // 1 - style principle and shape shortcut
 ctx.fillStyle = 'blue'
